@@ -6,11 +6,9 @@ public class Chunk {
 
     static int chunkSize = 16;
     public static final int VERTEX_SIZE = 6;
-    //Mesh mesh;
     int[] pos;
     int[] offset;
     VoxelData voxelData;
-    //float[] renderVertices;
     int curLOD;
     OctreeNode origin;
 
@@ -21,24 +19,8 @@ public class Chunk {
         this.curLOD = curLOD;
         voxelData = new VoxelData(chunkSize, chunkSize, chunkSize);
         voxelData.sample(pos[0], pos[1], pos[2]);
-        //renderVertices = new float[chunkSize * chunkSize * chunkSize * 6 * 4 * VERTEX_SIZE];
         origin = new OctreeNode(chunkSize, new int[]{0, 0, 0}, voxelData.get(0, 0, 0));
         origin.constructOctree(voxelData, curLOD, 0);
-        System.out.println(origin.getChildrenAtLOD(curLOD, 0).size());
-        /*mesh = new Mesh(true, chunkSize * chunkSize * chunkSize * 6 * 4,
-                chunkSize * chunkSize * chunkSize * 6 * 6 * 3, VertexAttribute.Position(), VertexAttribute.Normal());
-        int len = 32 * 32 * 32 * 6 * 6 / 3;
-        short[] indices = new short[len];
-        short j = 0;
-        for (int i = 0; i < len; i += 6, j += 4) {
-            indices[i + 0] = (short)(j + 0);
-            indices[i + 1] = (short)(j + 1);
-            indices[i + 2] = (short)(j + 2);
-            indices[i + 3] = (short)(j + 2);
-            indices[i + 4] = (short)(j + 3);
-            indices[i + 5] = (short)(j + 0);
-        }
-        mesh.setIndices(indices);*/
     }
 
     public int getChunkVertices(float[] vertices){

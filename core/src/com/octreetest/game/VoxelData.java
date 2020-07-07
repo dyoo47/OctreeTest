@@ -3,24 +3,12 @@ package com.octreetest.game;
 public class VoxelData {
 
     byte[] data;
-/*    private final int topOffset;
-    private final int botOffset;
-    private final int leftOffset;
-    private final int rightOffset;
-    private final int frontOffset;
-    private final int backOffset;*/
     private final int width;
     private final int height;
     private final int depth;
 
     public VoxelData(int width, int height, int depth){
         data = new byte[width * height * depth];
-/*        topOffset = width * depth;
-        botOffset = -width * depth;
-        rightOffset = 1;
-        leftOffset = -1;
-        frontOffset = -width;
-        backOffset = width;*/
         this.width = width;
         this.height = height;
         this.depth = depth;
@@ -48,8 +36,23 @@ public class VoxelData {
         for(int i = 0; i < width; i++){
             for(int j = 0; j < height; j++){
                 for(int k = 0; k < depth; k++){
-                    int sample = (int) Math.round(SimplexNoise.noise(i + x, j + y, k + z));
+                    int sample = (int) Math.round(SimplexNoise.noise((i + x) / 50f, (j + y) / 50f, (k + z) / 50f));
                     if(sample > 0){
+                        fastSet(i, j, k, (byte) 1);
+                    }else{
+                        fastSet(i, j, k, (byte) 0);
+                    }
+                }
+            }
+        }
+    }
+
+    public void sample2D(int x, int y, int z){
+        for(int i = 0; i < width; i++){
+            for(int j = 0; j < height; j++){
+                for(int k = 0; k < depth; k++){
+                    int sample = (int) Math.round(((SimplexNoise.noise((i + x) / 10f, (k + z) / 10f) + 1) * 4) + ((SimplexNoise.noise((i + x) / 5f, (k + z) / 5f) + 1) * 2));
+                    if(j + y <= sample){
                         fastSet(i, j, k, (byte) 1);
                     }else{
                         fastSet(i, j, k, (byte) 0);

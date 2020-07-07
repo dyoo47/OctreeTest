@@ -27,7 +27,7 @@ public class World implements RenderableProvider {
     int chunksY;
     int chunksZ;
     static int farLOD = 3;
-    static int nearLOD = 4;
+    static int nearLOD = 8;
 
     public World(int width, int height, int depth){
         chunks = new Chunk[width * height * depth];
@@ -82,18 +82,15 @@ public class World implements RenderableProvider {
     public void getRenderables(Array<Renderable> renderables, Pool<Renderable> pool) {
         renderedChunks = 0;
         for (int i = 0; i < chunks.length; i++) {
-            //System.out.println(renderedChunks);
             Chunk chunk = chunks[i];
             Mesh mesh = meshes[i];
             if (dirty[i]) {
                 int numVerts = chunk.getChunkVertices(vertices);
-                //if(numVerts == 0) System.out.println(i);
                 vertexCount[i] = numVerts / 4 * 6;
                 mesh.setVertices(vertices, 0, numVerts * Chunk.VERTEX_SIZE);
                 dirty[i] = false;
             }
             if (vertexCount[i] == 0) continue;
-            //System.out.println(renderedChunks);
 
             Renderable renderable = pool.obtain();
             renderable.meshPart.mesh = mesh;
