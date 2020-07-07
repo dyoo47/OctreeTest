@@ -51,7 +51,7 @@ public class VoxelData {
         for(int i = 0; i < width; i++){
             for(int j = 0; j < height; j++){
                 for(int k = 0; k < depth; k++){
-                    int sample = (int) Math.round(((SimplexNoise.noise((i + x) / 10f, (k + z) / 10f) + 1) * 4) + ((SimplexNoise.noise((i + x) / 5f, (k + z) / 5f) + 1) * 2));
+                    int sample = (int) Math.round(((SimplexNoise.noise((i + x) / 10f, (k + z) / 10f) + 1) * 4) + ((SimplexNoise.noise((i + x) / 200f, (k + z) / 200f) + 1) * 32));
                     if(j + y <= sample){
                         fastSet(i, j, k, (byte) 1);
                     }else{

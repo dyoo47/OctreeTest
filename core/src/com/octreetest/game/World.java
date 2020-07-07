@@ -1,6 +1,5 @@
 package com.octreetest.game;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Mesh;
 import com.badlogic.gdx.graphics.VertexAttribute;
@@ -8,7 +7,6 @@ import com.badlogic.gdx.graphics.g3d.Material;
 import com.badlogic.gdx.graphics.g3d.Renderable;
 import com.badlogic.gdx.graphics.g3d.RenderableProvider;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
 
@@ -20,14 +18,14 @@ public class World implements RenderableProvider {
     public float[] vertices;
     public int[] vertexCount;
     public boolean[] dirty;
-    public Material[] materials;
+    final Material mat;
     public Mesh[] meshes;
     static public int renderedChunks;
     int chunksX;
     int chunksY;
     int chunksZ;
     static int farLOD = 3;
-    static int nearLOD = 8;
+    static int nearLOD = 4;
 
     public World(int width, int height, int depth){
         chunks = new Chunk[width * height * depth];
@@ -48,17 +46,17 @@ public class World implements RenderableProvider {
         short[] indices = new short[len];
         short j = 0;
         for(i = 0; i < len; i+= 6, j+= 4){
-            indices[i + 0] = (short)(j + 0);
+            indices[i] = (j);
             indices[i + 1] = (short)(j + 1);
             indices[i + 2] = (short)(j + 2);
             indices[i + 3] = (short)(j + 2);
             indices[i + 4] = (short)(j + 3);
-            indices[i + 5] = (short)(j + 0);
+            indices[i + 5] = (j);
         }
         this.meshes = new Mesh[chunksX * chunksY * chunksZ];
         for (i = 0; i < meshes.length; i++) {
             meshes[i] = new Mesh(true, CHUNK_SIZE * CHUNK_SIZE * CHUNK_SIZE * 6 * 4, CHUNK_SIZE * CHUNK_SIZE
-                    * CHUNK_SIZE * 36 / 3, VertexAttribute.Position(), VertexAttribute.Normal());
+                    * CHUNK_SIZE * 36 / 3, VertexAttribute.Position(), VertexAttribute.Normal(), VertexAttribute.ColorUnpacked());
             meshes[i].setIndices(indices);
         }
         this.dirty = new boolean[chunksX * chunksY * chunksZ];
@@ -71,11 +69,8 @@ public class World implements RenderableProvider {
 
         this.vertices = new float[Chunk.VERTEX_SIZE * 6 * CHUNK_SIZE * CHUNK_SIZE * CHUNK_SIZE];
 
-        this.materials = new Material[chunksX * chunksY * chunksZ];
-        for (i = 0; i < materials.length; i++) {
-            materials[i] = new Material(new ColorAttribute(ColorAttribute.Diffuse, MathUtils.random(0.5f, 1f), MathUtils.random(
-                    0.5f, 1f), MathUtils.random(0.5f, 1f), 1));
-        }
+        mat = new Material(new ColorAttribute(ColorAttribute.Diffuse, 1f, 1f, 1f, 1f));
+
     }
 
     @Override
@@ -97,7 +92,7 @@ public class World implements RenderableProvider {
             renderable.meshPart.offset = 0;
             renderable.meshPart.size = vertexCount[i];
             renderable.meshPart.primitiveType = GL20.GL_TRIANGLES;
-            renderable.material = materials[i];
+            renderable.material = mat;
             renderables.add(renderable);
             renderedChunks++;
         }

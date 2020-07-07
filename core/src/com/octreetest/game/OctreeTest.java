@@ -46,6 +46,7 @@ public class OctreeTest extends ApplicationAdapter {
 		cam.near = 0.5f;
 		cam.far = 1000;
 		controller = new FirstPersonCameraController(cam);
+		controller.setVelocity(10);
 		Gdx.input.setInputProcessor(controller);
 
 		environment = new Environment();
@@ -59,7 +60,7 @@ public class OctreeTest extends ApplicationAdapter {
 		instance = new ModelInstance(model);
 
 
-		world = new World(16, 8, 16);
+		world = new World(16, 16, 16);
 		adjustLOD(0);
 
 	}

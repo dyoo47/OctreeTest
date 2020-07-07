@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Chunk {
 
     static int chunkSize = 16;
-    public static final int VERTEX_SIZE = 6;
+    public static final int VERTEX_SIZE = 10;
     int[] pos;
     int[] offset;
     VoxelData voxelData;
@@ -112,6 +112,10 @@ public class Chunk {
         vertices[vertexOffset++] = 0;
         vertices[vertexOffset++] = -1;
         vertices[vertexOffset++] = 0;
+        vertices[vertexOffset++] = (x + ox) / (16*16f);
+        vertices[vertexOffset++] = (y + oy) / (16*16f);
+        vertices[vertexOffset++] = (z + oz) / (16*16f);
+        vertices[vertexOffset++] = 1f;
 
         vertices[vertexOffset++] = ox + x + size;
         vertices[vertexOffset++] = oy + y;
@@ -119,6 +123,10 @@ public class Chunk {
         vertices[vertexOffset++] = 0;
         vertices[vertexOffset++] = -1;
         vertices[vertexOffset++] = 0;
+        vertices[vertexOffset++] = (x + ox) / (16*16f);
+        vertices[vertexOffset++] = (y + oy) / (16*16f);
+        vertices[vertexOffset++] = (z + oz) / (16*16f);
+        vertices[vertexOffset++] = 1f;
 
         vertices[vertexOffset++] = ox + x + size;
         vertices[vertexOffset++] = oy + y;
@@ -126,6 +134,10 @@ public class Chunk {
         vertices[vertexOffset++] = 0;
         vertices[vertexOffset++] = -1;
         vertices[vertexOffset++] = 0;
+        vertices[vertexOffset++] = (x + ox) / (16*16f);
+        vertices[vertexOffset++] = (y + oy) / (16*16f);
+        vertices[vertexOffset++] = (z + oz) / (16*16f);
+        vertices[vertexOffset++] = 1f;
 
         vertices[vertexOffset++] = ox + x;
         vertices[vertexOffset++] = oy + y;
@@ -133,6 +145,10 @@ public class Chunk {
         vertices[vertexOffset++] = 0;
         vertices[vertexOffset++] = -1;
         vertices[vertexOffset++] = 0;
+        vertices[vertexOffset++] = (x + ox) / (16*16f);
+        vertices[vertexOffset++] = (y + oy) / (16*16f);
+        vertices[vertexOffset++] = (z + oz) / (16*16f);
+        vertices[vertexOffset++] = 1f;
         return vertexOffset;
     }
 
@@ -150,6 +166,10 @@ public class Chunk {
         vertices[vertexOffset++] = 0;
         vertices[vertexOffset++] = 1;
         vertices[vertexOffset++] = 0;
+        vertices[vertexOffset++] = (x + ox) / (16*16f);
+        vertices[vertexOffset++] = (y + oy) / (16*16f);
+        vertices[vertexOffset++] = (z + oz) / (16*16f);
+        vertices[vertexOffset++] = 1f;
 
         vertices[vertexOffset++] = ox + x;
         vertices[vertexOffset++] = oy + y + size;
@@ -157,6 +177,10 @@ public class Chunk {
         vertices[vertexOffset++] = 0;
         vertices[vertexOffset++] = 1;
         vertices[vertexOffset++] = 0;
+        vertices[vertexOffset++] = (x + ox) / (16*16f);
+        vertices[vertexOffset++] = (y + oy) / (16*16f);
+        vertices[vertexOffset++] = (z + oz) / (16*16f);
+        vertices[vertexOffset++] = 1f;
 
         vertices[vertexOffset++] = ox + x + size;
         vertices[vertexOffset++] = oy + y + size;
@@ -164,6 +188,10 @@ public class Chunk {
         vertices[vertexOffset++] = 0;
         vertices[vertexOffset++] = 1;
         vertices[vertexOffset++] = 0;
+        vertices[vertexOffset++] = (x + ox) / (16*16f);
+        vertices[vertexOffset++] = (y + oy) / (16*16f);
+        vertices[vertexOffset++] = (z + oz) / (16*16f);
+        vertices[vertexOffset++] = 1f;
 
         vertices[vertexOffset++] = ox + x + size;
         vertices[vertexOffset++] = oy + y + size;
@@ -171,6 +199,10 @@ public class Chunk {
         vertices[vertexOffset++] = 0;
         vertices[vertexOffset++] = 1;
         vertices[vertexOffset++] = 0;
+        vertices[vertexOffset++] = (x + ox) / (16*16f);
+        vertices[vertexOffset++] = (y + oy) / (16*16f);
+        vertices[vertexOffset++] = (z + oz) / (16*16f);
+        vertices[vertexOffset++] = 1f;
         return vertexOffset;
     }
 
@@ -188,6 +220,10 @@ public class Chunk {
         vertices[vertexOffset++] = 1;
         vertices[vertexOffset++] = 0;
         vertices[vertexOffset++] = 0;
+        vertices[vertexOffset++] = (x + ox) / (16*16f);
+        vertices[vertexOffset++] = (y + oy) / (16*16f);
+        vertices[vertexOffset++] = (z + oz) / (16*16f);
+        vertices[vertexOffset++] = 1f;
 
         vertices[vertexOffset++] = ox + x + size;
         vertices[vertexOffset++] = oy + y + size;
@@ -195,6 +231,10 @@ public class Chunk {
         vertices[vertexOffset++] = 1;
         vertices[vertexOffset++] = 0;
         vertices[vertexOffset++] = 0;
+        vertices[vertexOffset++] = (x + ox) / (16*16f);
+        vertices[vertexOffset++] = (y + oy) / (16*16f);
+        vertices[vertexOffset++] = (z + oz) / (16*16f);
+        vertices[vertexOffset++] = 1f;
 
         vertices[vertexOffset++] = ox + x + size;
         vertices[vertexOffset++] = oy + y + size;
@@ -202,6 +242,10 @@ public class Chunk {
         vertices[vertexOffset++] = 1;
         vertices[vertexOffset++] = 0;
         vertices[vertexOffset++] = 0;
+        vertices[vertexOffset++] = (x + ox) / (16*16f);
+        vertices[vertexOffset++] = (y + oy) / (16*16f);
+        vertices[vertexOffset++] = (z + oz) / (16*16f);
+        vertices[vertexOffset++] = 1f;
 
         vertices[vertexOffset++] = ox + x + size;
         vertices[vertexOffset++] = oy + y;
@@ -209,6 +253,10 @@ public class Chunk {
         vertices[vertexOffset++] = 1;
         vertices[vertexOffset++] = 0;
         vertices[vertexOffset++] = 0;
+        vertices[vertexOffset++] = (x + ox) / (16*16f);
+        vertices[vertexOffset++] = (y + oy) / (16*16f);
+        vertices[vertexOffset++] = (z + oz) / (16*16f);
+        vertices[vertexOffset++] = 1f;
         return vertexOffset;
     }
 
@@ -226,6 +274,10 @@ public class Chunk {
         vertices[vertexOffset++] = -1;
         vertices[vertexOffset++] = 0;
         vertices[vertexOffset++] = 0;
+        vertices[vertexOffset++] = (x + ox) / (16*16f);
+        vertices[vertexOffset++] = (y + oy) / (16*16f);
+        vertices[vertexOffset++] = (z + oz) / (16*16f);
+        vertices[vertexOffset++] = 1f;
 
         vertices[vertexOffset++] = ox + x;
         vertices[vertexOffset++] = oy + y;
@@ -233,6 +285,10 @@ public class Chunk {
         vertices[vertexOffset++] = -1;
         vertices[vertexOffset++] = 0;
         vertices[vertexOffset++] = 0;
+        vertices[vertexOffset++] = (x + ox) / (16*16f);
+        vertices[vertexOffset++] = (y + oy) / (16*16f);
+        vertices[vertexOffset++] = (z + oz) / (16*16f);
+        vertices[vertexOffset++] = 1f;
 
         vertices[vertexOffset++] = ox + x;
         vertices[vertexOffset++] = oy + y + size;
@@ -240,6 +296,10 @@ public class Chunk {
         vertices[vertexOffset++] = -1;
         vertices[vertexOffset++] = 0;
         vertices[vertexOffset++] = 0;
+        vertices[vertexOffset++] = (x + ox) / (16*16f);
+        vertices[vertexOffset++] = (y + oy) / (16*16f);
+        vertices[vertexOffset++] = (z + oz) / (16*16f);
+        vertices[vertexOffset++] = 1f;
 
         vertices[vertexOffset++] = ox + x;
         vertices[vertexOffset++] = oy + y + size;
@@ -247,6 +307,10 @@ public class Chunk {
         vertices[vertexOffset++] = -1;
         vertices[vertexOffset++] = 0;
         vertices[vertexOffset++] = 0;
+        vertices[vertexOffset++] = (x + ox) / (16*16f);
+        vertices[vertexOffset++] = (y + oy) / (16*16f);
+        vertices[vertexOffset++] = (z + oz) / (16*16f);
+        vertices[vertexOffset++] = 1f;
         return vertexOffset;
     }
 
@@ -264,6 +328,10 @@ public class Chunk {
         vertices[vertexOffset++] = 0;
         vertices[vertexOffset++] = 0;
         vertices[vertexOffset++] = -1;
+        vertices[vertexOffset++] = (x + ox) / (16*16f);
+        vertices[vertexOffset++] = (y + oy) / (16*16f);
+        vertices[vertexOffset++] = (z + oz) / (16*16f);
+        vertices[vertexOffset++] = 1f;
 
         vertices[vertexOffset++] = ox + x + size;
         vertices[vertexOffset++] = oy + y;
@@ -271,6 +339,10 @@ public class Chunk {
         vertices[vertexOffset++] = 0;
         vertices[vertexOffset++] = 0;
         vertices[vertexOffset++] = -1;
+        vertices[vertexOffset++] = (x + ox) / (16*16f);
+        vertices[vertexOffset++] = (y + oy) / (16*16f);
+        vertices[vertexOffset++] = (z + oz) / (16*16f);
+        vertices[vertexOffset++] = 1f;
 
         vertices[vertexOffset++] = ox + x + size;
         vertices[vertexOffset++] = oy + y + size;
@@ -278,6 +350,10 @@ public class Chunk {
         vertices[vertexOffset++] = 0;
         vertices[vertexOffset++] = 0;
         vertices[vertexOffset++] = -1;
+        vertices[vertexOffset++] = (x + ox) / (16*16f);
+        vertices[vertexOffset++] = (y + oy) / (16*16f);
+        vertices[vertexOffset++] = (z + oz) / (16*16f);
+        vertices[vertexOffset++] = 1f;
 
         vertices[vertexOffset++] = ox + x;
         vertices[vertexOffset++] = oy + y + size;
@@ -285,6 +361,10 @@ public class Chunk {
         vertices[vertexOffset++] = 0;
         vertices[vertexOffset++] = 0;
         vertices[vertexOffset++] = -1;
+        vertices[vertexOffset++] = (x + ox) / (16*16f);
+        vertices[vertexOffset++] = (y + oy) / (16*16f);
+        vertices[vertexOffset++] = (z + oz) / (16*16f);
+        vertices[vertexOffset++] = 1f;
         return vertexOffset;
     }
 
@@ -302,6 +382,10 @@ public class Chunk {
         vertices[vertexOffset++] = 0;
         vertices[vertexOffset++] = 0;
         vertices[vertexOffset++] = 1;
+        vertices[vertexOffset++] = (x + ox) / (16*16f);
+        vertices[vertexOffset++] = (y + oy) / (16*16f);
+        vertices[vertexOffset++] = (z + oz) / (16*16f);
+        vertices[vertexOffset++] = 1f;
 
         vertices[vertexOffset++] = ox + x;
         vertices[vertexOffset++] = oy + y + size;
@@ -309,6 +393,10 @@ public class Chunk {
         vertices[vertexOffset++] = 0;
         vertices[vertexOffset++] = 0;
         vertices[vertexOffset++] = 1;
+        vertices[vertexOffset++] = (x + ox) / (16*16f);
+        vertices[vertexOffset++] = (y + oy) / (16*16f);
+        vertices[vertexOffset++] = (z + oz) / (16*16f);
+        vertices[vertexOffset++] = 1f;
 
         vertices[vertexOffset++] = ox + x + size;
         vertices[vertexOffset++] = oy + y + size;
@@ -316,6 +404,10 @@ public class Chunk {
         vertices[vertexOffset++] = 0;
         vertices[vertexOffset++] = 0;
         vertices[vertexOffset++] = 1;
+        vertices[vertexOffset++] = (x + ox) / (16*16f);
+        vertices[vertexOffset++] = (y + oy) / (16*16f);
+        vertices[vertexOffset++] = (z + oz) / (16*16f);
+        vertices[vertexOffset++] = 1f;
 
         vertices[vertexOffset++] = ox + x + size;
         vertices[vertexOffset++] = oy + y;
@@ -323,6 +415,10 @@ public class Chunk {
         vertices[vertexOffset++] = 0;
         vertices[vertexOffset++] = 0;
         vertices[vertexOffset++] = 1;
+        vertices[vertexOffset++] = (x + ox) / (16*16f);
+        vertices[vertexOffset++] = (y + oy) / (16*16f);
+        vertices[vertexOffset++] = (z + oz) / (16*16f);
+        vertices[vertexOffset++] = 1f;
         return vertexOffset;
     }
 }
