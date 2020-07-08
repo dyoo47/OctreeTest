@@ -25,7 +25,7 @@ public class World implements RenderableProvider {
     int chunksY;
     int chunksZ;
     static int farLOD = 3;
-    static int nearLOD = 4;
+    static int nearLOD = 2;
 
     public World(int width, int height, int depth){
         chunks = new Chunk[width * height * depth];

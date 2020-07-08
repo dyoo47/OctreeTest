@@ -47,12 +47,78 @@ public class VoxelData {
         }
     }
 
+    public void sampleMod(int x, int y, int z){
+        for(int i = 0; i < width; i++){
+            for(int j = 0; j < height; j++){
+                for(int k = 0; k < depth; k++){
+                    int sample = (int) Math.round(Math.abs(SimplexNoise.noise((i + x) / 50f, (j + y) / 50f, (k + z) / 50f) * 3 % 2));
+                    if(sample > 0){
+                        fastSet(i, j, k, (byte) 1);
+                    }else{
+                        fastSet(i, j, k, (byte) 0);
+                    }
+                }
+            }
+        }
+    }
+
+    public void sampleCaves(int x, int y, int z){
+        for(int i = 0; i < width; i++){
+            for(int j = 0; j < height; j++){
+                for(int k = 0; k < depth; k++){
+                    int sample = (int) Math.round(SimplexNoise.noise((i + x) / 50f, (j + y) / 50f, (k + z) / 50f));
+                    if(sample == 0){
+                        fastSet(i, j, k, (byte) 1);
+                    }else{
+                        fastSet(i, j, k, (byte) 0);
+                    }
+                }
+            }
+        }
+    }
+
     public void sample2D(int x, int y, int z){
         for(int i = 0; i < width; i++){
             for(int j = 0; j < height; j++){
                 for(int k = 0; k < depth; k++){
-                    int sample = (int) Math.round(((SimplexNoise.noise((i + x) / 10f, (k + z) / 10f) + 1) * 4) + ((SimplexNoise.noise((i + x) / 200f, (k + z) / 200f) + 1) * 32));
+                    int sample = (int) Math.round(((SimplexNoise.noise((i + x) / 50f, (k + z) / 50f) + 1) * 4) + ((SimplexNoise.noise((i + x) / 200f, (k + z) / 200f) + 1) * 32));
                     if(j + y <= sample){
+                        fastSet(i, j, k, (byte) 1);
+                    }else{
+                        fastSet(i, j, k, (byte) 0);
+                    }
+                }
+            }
+        }
+    }
+
+    public void sampleRidges(int x, int y, int z){
+        for(int i = 0; i < width; i++){
+            for(int j = 0; j < height; j++){
+                for(int k = 0; k < depth; k++){
+                    int sample = (int) Math.round(((SimplexNoise.noise((i + x) / 50f, (k + z) / 50f) + 1) * 4) + Math.pow((1 - Math.abs(SimplexNoise.noise((i + x) / 200f, (k + z) / 200f))), 3) * 32);
+                    if(j + y <= sample){
+                        fastSet(i, j, k, (byte) 1);
+                    }else{
+                        fastSet(i, j, k, (byte) 0);
+                    }
+                }
+            }
+        }
+    }
+
+    public void sampleSphere(int x, int y, int z){
+
+        int sphereX = 128;
+        int sphereY = 128;
+        int sphereZ = 128;
+        int sphereRadius = 32;
+
+        for(int i = 0; i < width; i++){
+            for(int j = 0; j < height; j++){
+                for(int k = 0; k < depth; k++){
+                    int sample = (int) Math.round(Math.sqrt(Math.pow(sphereX - (x + i), 2) + Math.pow(sphereY - (y + j), 2) + Math.pow(sphereZ - (z + k), 2)) - sphereRadius);
+                    if(sample < 0){
                         fastSet(i, j, k, (byte) 1);
                     }else{
                         fastSet(i, j, k, (byte) 0);

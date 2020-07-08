@@ -18,7 +18,7 @@ public class Chunk {
         this.pos = pos;
         this.curLOD = curLOD;
         voxelData = new VoxelData(chunkSize, chunkSize, chunkSize);
-        voxelData.sample(pos[0], pos[1], pos[2]);
+        voxelData.sampleSphere(pos[0], pos[1], pos[2]);
         origin = new OctreeNode(chunkSize, new int[]{0, 0, 0}, voxelData.get(0, 0, 0));
         origin.constructOctree(voxelData, curLOD, 0);
     }
@@ -42,8 +42,8 @@ public class Chunk {
                     }
 
                     //check bottom
-                    if(node.pos[1] - 1 == -1 ||
-                            voxelData.get(node.pos[0] + i, node.pos[1] - 1, node.pos[2] + j) == 0){
+                    if(node.pos[1] - node.size < 0 ||
+                            voxelData.get(node.pos[0] + i, node.pos[1] - node.size, node.pos[2] + j) == 0){
                         dvis = true;
                     }
 
@@ -54,8 +54,8 @@ public class Chunk {
                     }
 
                     //check left
-                    if(node.pos[0] - 1 == -1 ||
-                            voxelData.get(node.pos[0] - 1, node.pos[1] + i, node.pos[2] + j) == 0){
+                    if(node.pos[0] - node.size < 0 ||
+                            voxelData.get(node.pos[0] - node.size, node.pos[1] + i, node.pos[2] + j) == 0){
                         lvis = true;
                     }
 
@@ -66,8 +66,8 @@ public class Chunk {
                     }
 
                     //check back
-                    if(node.pos[2] - 1 == -1 ||
-                            voxelData.get(node.pos[0] + i, node.pos[1] + j, node.pos[2] - 1) == 0){
+                    if(node.pos[2] - node.size < 0 ||
+                            voxelData.get(node.pos[0] + i, node.pos[1] + j, node.pos[2] - node.size) == 0){
                         bvis = true;
                     }
                     if(tvis && dvis && rvis && lvis && fvis && bvis) break;

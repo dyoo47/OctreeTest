@@ -41,7 +41,7 @@ public class OctreeTest extends ApplicationAdapter {
 		font = new BitmapFont();
 		config.defaultCullFace = GL20.GL_FRONT;
 		cam = new PerspectiveCamera(67, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		cam.position.set(10f, 10f, 10f);
+		cam.position.set(128f, 128f, 128f);
 		//cam.lookAt(0,0,0);
 		cam.near = 0.5f;
 		cam.far = 1000;
@@ -84,6 +84,9 @@ public class OctreeTest extends ApplicationAdapter {
 
 		controller.update();
 		spriteBatch.begin();
+		font.draw(spriteBatch, "X: " + cam.position.x, 0, 80);
+		font.draw(spriteBatch, "Y: " + cam.position.y, 0, 60);
+		font.draw(spriteBatch, "Z: " + cam.position.z, 0, 40);
 		font.draw(spriteBatch, "FPS: " + Gdx.graphics.getFramesPerSecond() + ", renderedChunks: " + World.renderedChunks, 0, 20);
 		spriteBatch.end();
 
