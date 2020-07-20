@@ -14,31 +14,43 @@ public class World implements RenderableProvider {
 
     public static final int CHUNK_SIZE = 16;
 
-    public Chunk[] chunks;
+    public ChunkCollection chunkCollection;
     public float[] vertices;
     public int[] vertexCount;
-    public boolean[] dirty;
     final Material mat;
     public Mesh[] meshes;
     static public int renderedChunks;
     int chunksX;
     int chunksY;
     int chunksZ;
-    static int farLOD = 3;
-    static int nearLOD = 2;
+    static byte farLOD = 3;
+    static byte nearLOD = 4;
+    //Chunk[] chunks;
 
     public World(int width, int height, int depth){
-        chunks = new Chunk[width * height * depth];
+        chunkCollection = new ChunkCollection(width, height, depth);
+        //chunks = new Chunk[width * height * depth];
         chunksX = width;
         chunksY = height;
         chunksZ = depth;
         int i = 0;
-        for(int y = 0; y < chunksY; y++){
+        /*for(int y = 0; y < chunksY; y++){
             for(int z = 0; z < chunksZ; z++){
                 for(int x = 0; x < chunksX; x++){
                     Chunk chunk = new Chunk(new int[]{x * CHUNK_SIZE, y * CHUNK_SIZE, z * CHUNK_SIZE}, nearLOD,
                             new int[]{x * CHUNK_SIZE, y * CHUNK_SIZE, z * CHUNK_SIZE});
-                    chunks[i++] = chunk;
+                    chunkCollection.set(x, y, z, chunk);
+                    //chunks[i] = chunk;
+                    i++;
+                }
+            }
+        }*/
+
+        for(int x = 0; x < chunksX; x++){
+            for(int y = 0; y < chunksY; y++){
+                for(int z = 0; z < chunksZ; z++){
+                    Chunk chunk = new Chunk(new int[]{x * CHUNK_SIZE, y * CHUNK_SIZE, z * CHUNK_SIZE}, nearLOD);
+                    chunkCollection.set(x, y, z, chunk);
                 }
             }
         }
@@ -59,9 +71,9 @@ public class World implements RenderableProvider {
                     * CHUNK_SIZE * 36 / 3, VertexAttribute.Position(), VertexAttribute.Normal(), VertexAttribute.ColorUnpacked());
             meshes[i].setIndices(indices);
         }
-        this.dirty = new boolean[chunksX * chunksY * chunksZ];
+        /*this.dirty = new boolean[chunksX * chunksY * chunksZ];
         for (i = 0; i < dirty.length; i++)
-            dirty[i] = true;
+            dirty[i] = true;*/
 
         this.vertexCount = new int[chunksX * chunksY * chunksZ];
         for (i = 0; i < vertexCount.length; i++)
@@ -76,14 +88,14 @@ public class World implements RenderableProvider {
     @Override
     public void getRenderables(Array<Renderable> renderables, Pool<Renderable> pool) {
         renderedChunks = 0;
-        for (int i = 0; i < chunks.length; i++) {
-            Chunk chunk = chunks[i];
+        for (int i = 0; i < chunkCollection.chunks.length; i++) {
+            Chunk chunk = chunkCollection.chunks[i];
             Mesh mesh = meshes[i];
-            if (dirty[i]) {
+            if (chunk.dirty) {
                 int numVerts = chunk.getChunkVertices(vertices);
                 vertexCount[i] = numVerts / 4 * 6;
                 mesh.setVertices(vertices, 0, numVerts * Chunk.VERTEX_SIZE);
-                dirty[i] = false;
+                chunk.dirty = false;
             }
             if (vertexCount[i] == 0) continue;
 

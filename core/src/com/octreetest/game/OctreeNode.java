@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 public class OctreeNode {
     OctreeNode[] children;
-    int size;
-    int[] pos;
-    int value;
+    byte size;
+    byte[] pos;
+    byte value;
 
     static int[][] childOffsets = {
             {0, 0, 0},
@@ -19,7 +19,7 @@ public class OctreeNode {
             {1, 1, 1}
     };
 
-    public OctreeNode(int size, int[] pos, int value){
+    public OctreeNode(byte size, byte[] pos, byte value){
         children = new OctreeNode[8];
         this.size = size;
         this.pos = pos;
@@ -28,14 +28,17 @@ public class OctreeNode {
 
     public void constructOctree(VoxelData data, int maxLOD, int curLOD){
 
-        int[] parentPos = this.pos;
-        int parentSize = this.size;
+        byte[] parentPos = this.pos;
+        byte parentSize = this.size;
 
         for(int i=0; i<8; i++){
-            int childSize = parentSize / 2;
-            int[] childPos = {parentPos[0] + childOffsets[i][0] * childSize,
-                    parentPos[1] + childOffsets[i][1] * childSize, parentPos[2] + childOffsets[i][2] * childSize};
-            int first = data.get(childPos[0], childPos[1], childPos[2]);
+            byte childSize = (byte) (parentSize / 2);
+            byte[] childPos = {
+                    (byte) (parentPos[0] + childOffsets[i][0] * childSize),
+                    (byte) (parentPos[1] + childOffsets[i][1] * childSize),
+                    (byte) (parentPos[2] + childOffsets[i][2] * childSize)
+            };
+            byte first = data.get(childPos[0], childPos[1], childPos[2]);
             children[i] = new OctreeNode(childSize, childPos, first);
             boolean empty = true;
             for(int j=pos[0]; j<pos[0] + size; j++){

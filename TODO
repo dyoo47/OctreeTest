@@ -1,0 +1,16 @@
+
+********---------------------------TODO---------------------------********
+
+Finish ray-picking method / adding and subtracting voxels during runtime -------------DONE
+Optimize OctreeNode class to use less memory -------------DONE
+Save world on disk / world streaming
+Infinite world generation
+Collision / first person player controller
+
+OctreeNode size = 26 bytes
+26 * 8^4 (octree with four levels) * 16^3 (amount of chunks) = 1.51e9 = about 1.5 GB
+
+Raw Voxel Data
+Voxel size = 1 byte
+1 * 16^3 (chunk size) * 16^3 (amount of chunks) = 16,777,216 = about 0.02 GB
+

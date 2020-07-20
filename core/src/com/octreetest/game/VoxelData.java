@@ -52,11 +52,26 @@ public class VoxelData {
             for(int j = 0; j < height; j++){
                 for(int k = 0; k < depth; k++){
                     int sample = (int) Math.round(Math.abs(SimplexNoise.noise((i + x) / 50f, (j + y) / 50f, (k + z) / 50f) * 3 % 2));
-                    if(sample > 0){
+                    if(sample == 0){
                         fastSet(i, j, k, (byte) 1);
                     }else{
                         fastSet(i, j, k, (byte) 0);
                     }
+                }
+            }
+        }
+    }
+
+    public void sampleTest(int x, int y, int z){
+        for(int i = 0; i < width; i++){
+            for(int j = 0; j < height; j++){
+                for(int k = 0; k < depth; k++){
+                    if(k % 2 == 0){
+                        fastSet(i, j, k, (byte)1);
+                    }else{
+                        fastSet(i, j, k, (byte)0);
+                    }
+
                 }
             }
         }
