@@ -32,6 +32,8 @@ public class OctreeTest extends ApplicationAdapter {
 	SpriteBatch spriteBatch;
 	BitmapFont font;
 	FirstPersonCameraController controller;
+
+	PlayerMonitor playerMonitor;
 	World world;
 	Runtime runtime;
 
@@ -47,7 +49,8 @@ public class OctreeTest extends ApplicationAdapter {
 		font = new BitmapFont();
 		config.defaultCullFace = GL20.GL_FRONT;
 		cam = new PerspectiveCamera(67, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		cam.position.set(128, 128, 128);
+		playerMonitor = new PlayerMonitor(cam);
+		cam.position.set(16, 16, 16);
 		//cam.lookAt(0,0,0);
 		cam.near = 0.5f;
 		cam.far = 1000;
@@ -64,9 +67,9 @@ public class OctreeTest extends ApplicationAdapter {
 				new Material(ColorAttribute.createDiffuse(Color.GREEN)),
 				VertexAttributes.Usage.Position | VertexAttributes.Usage.Normal);
 		instance = new ModelInstance(model);
+		EventScheduler.init();
 
-
-		world = new World(8, 8, 8); //something goes wrong when all three numbers arent the same...
+		world = new World(1, 2, 1);
 		adjustLOD(0);
 
 	}
@@ -88,7 +91,19 @@ public class OctreeTest extends ApplicationAdapter {
 		modelBatch.render(world, environment);
 		modelBatch.end();
 
+
+		playerMonitor.update();
 		controller.update();
+		EventScheduler.periodic();
+		if(EventScheduler.everyXFrames(60)){
+			ArrayList<WorldGenerationThread.QueuedChunk> chunks;
+			chunks = playerMonitor.getNearChunks(4);
+			for(WorldGenerationThread.QueuedChunk chunk : chunks){
+				world.addChunk(chunk);
+			}
+		}
+
+
 		spriteBatch.begin();
 		font.draw(spriteBatch, "Total Memory: " + Double.toString(Runtime.getRuntime().totalMemory() / 1e9).substring(0, 4) + " GB", 0, 120);
 		font.draw(spriteBatch, "Memory Usage: " + Double.toString((Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) / 1e9).substring(0, 4) + " GB", 0, 100);
@@ -107,12 +122,24 @@ public class OctreeTest extends ApplicationAdapter {
 		if(Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)){
 			//getNode(Gdx.input.getX(), Gdx.input.getY());
 		}
+		if(Gdx.input.isKeyJustPressed(Input.Keys.M)){
+			/*world.addChunk(new int[]{16, 0, 16});
+			world.addChunk(new int[]{16, 16, 16});
+			world.addChunk(new int[]{32, 0, 32});
+			world.addChunk(new int[]{32, 16, 32});*/
+			ArrayList<WorldGenerationThread.QueuedChunk> chunks = new ArrayList<>();
+			chunks = playerMonitor.getNearChunks(2);
+			for(WorldGenerationThread.QueuedChunk chunk : chunks){
+				world.addChunk(chunk);
+			}
+		}
 	}
 	
 	@Override
 	public void dispose () {
 		modelBatch.dispose();
 		model.dispose();
+		world.dispose();
 	}
 
 	/*OctreeNode getNode(int screenX, int screenY){

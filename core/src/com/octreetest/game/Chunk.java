@@ -2,56 +2,33 @@ package com.octreetest.game;
 
 import java.util.ArrayList;
 
+
 public class Chunk {
 
     static byte chunkSize = 16;
     public static final int VERTEX_SIZE = 10;
     int[] pos;
-    //int[] offset;
-    //VoxelData voxelData;
     byte curLOD;
-    //OctreeNode origin;
     boolean dirty;
     EfficientOctree octree;
 
     public Chunk(int[] pos, byte curLOD){
-        //this.offset = offset;
+
         this.pos = pos;
         this.curLOD = curLOD;
         VoxelData voxelData = new VoxelData(chunkSize, chunkSize, chunkSize);
-        voxelData.sampleMod(pos[0], pos[1], pos[2]);
-        //origin = new OctreeNode(chunkSize, new byte[]{0, 0, 0}, voxelData.get(0, 0, 0));
-        //origin.constructOctree(voxelData, curLOD, 0);
+        voxelData.sampleRidges(pos[0], pos[1], pos[2]);
+
         dirty = true;
         octree = new EfficientOctree(35, chunkSize, voxelData);
         octree.constructOctree(voxelData, curLOD, 0, 0);
-        //if(pos[0] == 0 && pos[1] == 0 && pos[2] == 16)
-        //System.out.println(pos[0] + ", " + pos[1] + ", " + pos[2]);
-        //octree.logBuffer(8);
     }
-
-    /*public void restructOctree(){
-        origin.constructOctree(voxelData, curLOD, 0);
-    }*/
 
     public int getChunkVertices(float[] vertices) {
 
-        //ArrayList<OctreeNode> renderNodes = new ArrayList<OctreeNode>(origin.getChildrenAtLOD(curLOD, 0));
         ArrayList<Integer> renderNodes = new ArrayList<Integer>(octree.getChildrenAtLOD(curLOD, 0, 0));
-        //System.out.println(renderNodes.size());
-
         int vertexOffset = 0;
         VoxelData voxelData = new VoxelData(chunkSize, chunkSize, chunkSize);
-
-        /*for(OctreeNode node : renderNodes){
-            for(int i = node.pos[0]; i < node.pos[0] + node.size; i++){
-                for(int j = node.pos[1]; j < node.pos[1] + node.size; j++){
-                    for(int k = node.pos[2]; k < node.pos[2] + node.size; k++){
-                        voxelData.set(i, j, k, node.value);
-                    }
-                }
-            }
-        }*/
 
         for (int node : renderNodes) {
             for (int i = octree.getPos(node)[0]; i < octree.getPos(node)[0] + octree.getSize(node); i++) {
@@ -129,75 +106,6 @@ public class Chunk {
 
         return vertexOffset / VERTEX_SIZE;
     }
-
-        /*for(OctreeNode node : renderNodes){
-
-            boolean tvis = false, dvis = false, rvis = false, lvis = false, fvis = false, bvis = false;
-            for(int i=0; i<node.size; i++){
-                for(int j=0; j<node.size; j++){
-
-                    //check top
-                    if(node.pos[1] + node.size == chunkSize ||
-                            voxelData.get(node.pos[0] + i, node.pos[1] + node.size, node.pos[2] + j) == 0){
-                        tvis = true;
-                    }
-
-                    //check bottom
-                    if(node.pos[1] - node.size < 0 ||
-                            voxelData.get(node.pos[0] + i, node.pos[1] - node.size, node.pos[2] + j) == 0){
-                        dvis = true;
-                    }
-
-                    //check right
-                    if(node.pos[0] + node.size == chunkSize ||
-                            voxelData.get(node.pos[0] + node.size, node.pos[1] + i, node.pos[2] + j) == 0){
-                        rvis = true;
-                    }
-
-                    //check left
-                    if(node.pos[0] - node.size < 0 ||
-                            voxelData.get(node.pos[0] - node.size, node.pos[1] + i, node.pos[2] + j) == 0){
-                        lvis = true;
-                    }
-
-                    //check front
-                    if(node.pos[2] + node.size == chunkSize ||
-                            voxelData.get(node.pos[0] + i, node.pos[1] + j, node.pos[2] + node.size) == 0){
-                        fvis = true;
-                    }
-
-                    //check back
-                    if(node.pos[2] - node.size < 0 ||
-                            voxelData.get(node.pos[0] + i, node.pos[1] + j, node.pos[2] - node.size) == 0){
-                        bvis = true;
-                    }
-                    if(tvis && dvis && rvis && lvis && fvis && bvis) break;
-                }
-                if(tvis && dvis && rvis && lvis && fvis && bvis) break;
-            }
-            if(tvis){
-                vertexOffset = createTop(pos, node.pos, vertexOffset, vertices, node.size);
-            }
-            if(dvis){
-                vertexOffset = createBottom(pos, node.pos, vertexOffset, vertices, node.size);
-            }
-            if(rvis){
-                vertexOffset = createRight(pos, node.pos, vertexOffset, vertices, node.size);
-            }
-            if(lvis){
-                vertexOffset = createLeft(pos, node.pos, vertexOffset, vertices, node.size);
-            }
-            if(fvis){
-                vertexOffset = createFront(pos, node.pos, vertexOffset, vertices, node.size);
-            }
-            if(bvis){
-                vertexOffset = createBack(pos, node.pos, vertexOffset, vertices, node.size);
-            }
-        }
-        //System.out.println(vertexOffset / VERTEX_SIZE);
-        //System.out.println(faces);
-        return vertexOffset / VERTEX_SIZE;
-    }*/
 
     static int createBottom(int[] offset, byte[] pos, int vertexOffset, float[] vertices, int size){
         int x = pos[0];

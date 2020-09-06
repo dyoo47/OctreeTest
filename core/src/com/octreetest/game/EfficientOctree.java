@@ -28,7 +28,6 @@ public class EfficientOctree {
     }
 
     /*
-
     NODE STRUCTURE-----------------------
     0 :: size - 1 byte
     1 :: value - 1 byte
@@ -38,7 +37,6 @@ public class EfficientOctree {
     5 :: child pointer - 2 bytes    0 == null pointer as 0 is always taken by root node
     6 ::
     7 :: is leaf boolean - 1 byte
-
      */
 
     public void logBuffer(int length){
