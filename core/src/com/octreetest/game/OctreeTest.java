@@ -69,7 +69,7 @@ public class OctreeTest extends ApplicationAdapter {
 		instance = new ModelInstance(model);
 		EventScheduler.init();
 
-		world = new World(1, 2, 1);
+		world = new World(0, 0, 0);
 		adjustLOD(0);
 
 	}
@@ -97,7 +97,7 @@ public class OctreeTest extends ApplicationAdapter {
 		EventScheduler.periodic();
 		if(EventScheduler.everyXFrames(60)){
 			ArrayList<WorldGenerationThread.QueuedChunk> chunks;
-			chunks = playerMonitor.getNearChunks(4);
+			chunks = playerMonitor.getNearChunks(5, 2, 3, 4);
 			for(WorldGenerationThread.QueuedChunk chunk : chunks){
 				world.addChunk(chunk);
 			}
@@ -123,12 +123,8 @@ public class OctreeTest extends ApplicationAdapter {
 			//getNode(Gdx.input.getX(), Gdx.input.getY());
 		}
 		if(Gdx.input.isKeyJustPressed(Input.Keys.M)){
-			/*world.addChunk(new int[]{16, 0, 16});
-			world.addChunk(new int[]{16, 16, 16});
-			world.addChunk(new int[]{32, 0, 32});
-			world.addChunk(new int[]{32, 16, 32});*/
-			ArrayList<WorldGenerationThread.QueuedChunk> chunks = new ArrayList<>();
-			chunks = playerMonitor.getNearChunks(2);
+			ArrayList<WorldGenerationThread.QueuedChunk> chunks;
+			chunks = playerMonitor.getNearChunks(5, 2, 3, 4);
 			for(WorldGenerationThread.QueuedChunk chunk : chunks){
 				world.addChunk(chunk);
 			}

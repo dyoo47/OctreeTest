@@ -21,7 +21,7 @@ public class Chunk {
 
         dirty = true;
         octree = new EfficientOctree(35, chunkSize, voxelData);
-        octree.constructOctree(voxelData, curLOD, 0, 0);
+        octree.constructOctree(voxelData, Utility.Constants.MAX_LOD, 0, 0);
     }
 
     public int getChunkVertices(float[] vertices) {

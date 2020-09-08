@@ -62,6 +62,10 @@ public class EfficientOctree {
         System.out.println("END BUFFER********************");
     }
 
+    public void clear(){
+        buffer.clear();
+    }
+
     private int createNode(byte size, byte val, byte[] pos, boolean isLeaf){
         //returns pointer to new node in mem buffer
         if(memOffset + NODE_SIZE > mem.length){
